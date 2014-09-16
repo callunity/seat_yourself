@@ -3,13 +3,14 @@ class RestaurantsController < ApplicationController
 
 	def index
 			@restaurants = if params[:search]
-				Restaurant.where('LOWER(name) LIKE LOWER(?)', '%#{params[:search]}%')
+				Restaurant.where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
 			else
 				Restaurant.all 
 			end
 
-			if request.xhr?
-				render @restaurants
+			respond_to do |format|
+				format.html
+				format.js
 			end
 		end
 
