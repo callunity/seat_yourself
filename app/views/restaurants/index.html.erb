@@ -2,7 +2,10 @@
 
 <p>
 <h3>Search by restaurant name</h3>
-<%= render "search" %>
+<%= form_tag restaurants_path, method: :get, id: 'search-form' do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Submit" %>
+<% end %>
 
 <h5>OR</h5>
 
@@ -15,8 +18,9 @@
   <%= text_field_tag :distance, params[:distance] %>  <br>
   <%= submit_tag "Search" %>
 
-<%= render @restaurants %>
-
+<div id="restaurants">
+  <%= render @restaurants %>
+</div>
 
 
 

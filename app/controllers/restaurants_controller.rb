@@ -2,7 +2,15 @@ class RestaurantsController < ApplicationController
 	before_action :load_restaurant, only: [:show, :edit, :update, :destroy]
 
 	def index
-			@restaurants = Restaurant.all 
+			@restaurants = if params[:search]
+				Restaurant.where('LOWER(name) LIKE LOWER(?)', '%#{params[:search]}%')
+			else
+				Restaurant.all 
+			end
+
+			if request.xhr?
+				render @restaurants
+			end
 		end
 
 		def show
